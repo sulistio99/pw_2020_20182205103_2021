@@ -73,3 +73,20 @@ function ubah($data)
   // kasih tau sql perubahan data masuk ke database berupa angka
   return mysqli_affected_rows($conn);
 }
+
+function cari($keywoard)
+{
+  $conn = koneksi();
+
+  $query = "SELECT * FROM mahasiswa
+  WHERE nama LIKE '%$keywoard%' OR nrp LIKE '%$keywoard%'
+  ";
+  $q_tampil = mysqli_query($conn, $query);
+
+  // jika data banyak sekali
+  $rows = [];
+  while ($row = mysqli_fetch_assoc($q_tampil)) {
+    $rows[] = $row;
+  }
+  return $rows;
+}
