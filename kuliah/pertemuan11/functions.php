@@ -43,3 +43,33 @@ function tambah($data)
   // kasih tau sql perubahan data masuk ke database berupa angka
   return mysqli_affected_rows($conn);
 }
+
+function hapus($id)
+{
+  $conn = koneksi();
+
+  mysqli_query($conn, "DELETE FROM mahasiswa WHERE id = $id") or die(mysqli_error($conn));
+  return mysqli_affected_rows($conn);
+}
+
+function ubah($data)
+{
+  $conn = koneksi();
+
+  $id = $data['id'];
+  $nama = htmlspecialchars($data['nama']);
+  $nrp = htmlspecialchars($data['nrp']);
+  $email = htmlspecialchars($data['email']);
+  $jurusan = htmlspecialchars($data['jurusan']);
+  $gambar = htmlspecialchars($data['gambar']);
+
+  // pecah query insert
+  $q_update = "UPDATE mahasiswa SET
+  nama = '$nama', nrp = '$nrp', email = '$email', jurusan = '$jurusan', gambar = '$gambar' WHERE id = $id";
+  mysqli_query($conn, $q_update);
+
+  // memunculkan error
+  echo mysqli_error($conn);
+  // kasih tau sql perubahan data masuk ke database berupa angka
+  return mysqli_affected_rows($conn);
+}
