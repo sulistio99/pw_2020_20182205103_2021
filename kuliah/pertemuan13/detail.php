@@ -1,0 +1,45 @@
+<?php
+session_start();
+if (!isset($_SESSION['login'])) {
+  header("Location: login.php");
+  exit;
+}
+
+require 'functions.php';
+$id = $_GET['id'];
+$m = query("SELECT * FROM mahasiswa WHERE id = $id");
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Mahasiswa</title>
+</head>
+
+<body>
+  <h3>Detail Mahasiswa</h3>
+  <td><a href="index.php">Home</a></td>
+  <table border="1" cellpadding="10" cellspacing="0">
+    <tr>
+      <th>FOTO</th>
+      <th>NAMA</th>
+      <th>NRP</th>
+      <th>EMAIL</th>
+      <th>JURUSAN</th>
+      <th>AKSI</th>
+    </tr>
+    <tr>
+      <td><img src="img/<?= $m['gambar']; ?>" alt="" width="240px"></td>
+      <td><?= $m['nama']; ?></td>
+      <td><?= $m['nrp']; ?></td>
+      <td><?= $m['email']; ?></td>
+      <td><?= $m['jurusan']; ?></td>
+      <td><a href="ubah.php?id=<?= $m['id']; ?>">Edit</a> | <a href="hapus.php?id=<?= $m['id']; ?>" onclick="return confirm('apakah anda yakin?')" ;>Hapus</a></td>
+    </tr>
+  </table>
+</body>
+
+</html>
